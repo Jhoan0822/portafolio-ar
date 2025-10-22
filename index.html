@@ -3,11 +3,9 @@
 <head>
     <title>AR Portafolio - Jhoan Saldarriaga</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <!-- Scripts de A-Frame y AR.js. Usamos jsdelivr que es más estable para producción -->
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@master/aframe/build/aframe-ar.js"></script>
     <style>
-        /* CSS para el botón de información */
         #info-button {
             position: fixed;
             bottom: 20px;
@@ -26,45 +24,33 @@
 </head>
 <body style="margin : 0px; overflow: hidden;">
 
-    <!-- El botón ahora está limpio y funciona correctamente -->
     <button id="info-button" onclick="window.location.href='info.html'">
         Ver Información de Contacto
     </button>
 
-    <!-- Escena de A-Frame.
-         - vr-mode-ui: desactiva el botón de VR que no necesitamos.
-         - arjs: sourceType: webcam para usar la cámara. debugUIEnabled: false para una vista limpia (ponlo en 'true' si necesitas depurar).
-         - renderer: logarithmicDepthBuffer es bueno para evitar problemas de renderizado.
-    -->
     <a-scene
         embedded
         vr-mode-ui="enabled: false;"
         renderer="logarithmicDepthBuffer: true;"
         arjs="sourceType: webcam; debugUIEnabled: false;"
     >
-        <!-- ======== INICIO DE LA CORRECCIÓN IMPORTANTE ======== -->
+        <!--
+            ATENCIÓN: Cambia "NOMBRE_DE_TU_REPO" por el nombre exacto de tu repositorio en GitHub.
+            La barra inclinada al principio (/) es muy importante.
+        -->
 
-        <!-- 1. Se define el marcador. Apunta al archivo 'marker.patt' que creaste. -->
-        <a-marker type="pattern" url="marker.patt">
+        <a-marker type="pattern" url="portafolio-ar/marker.patt">
 
-            <!-- 2. El modelo 3D se coloca DENTRO de la etiqueta <a-marker>. -->
-            <!-- Esto hace que el modelo sea "hijo" del marcador. -->
-            <!-- Así, su posición, rotación y visibilidad dependen del marcador. -->
-            
-            <!-- He usado un modelo de pato de ejemplo para que puedas probarlo de inmediato. -->
-            <!-- ¡Recuerda cambiar 'url()' a la ruta de tu propio modelo .glb! -->
+            <!-- Cambia el nombre del archivo del modelo si es diferente -->
             <a-entity
-                gltf-model="url(https://aframe.io/examples/ar/models/duck/duck.gltf)"
+                gltf-model="url(/portafolio-ar/tu_modelo.glb)"
                 scale="0.1 0.1 0.1"
                 position="0 0 0"
                 rotation="-90 0 0"
             ></a-entity>
 
-        </a-marker> <!-- Se cierra la etiqueta del marcador -->
+        </a-marker>
 
-        <!-- ======== FIN DE LA CORRECCIÓN IMPORTANTE ======== -->
-
-        <!-- La cámara de AR.js se añade automáticamente, pero es buena práctica definirla -->
         <a-entity camera></a-entity>
     </a-scene>
 </body>
