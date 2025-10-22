@@ -1,78 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Portafolio AR - Jhoan Saldarriaga</title>
+    <title>Prueba de Marcador Personalizado</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <!-- Librerías de A-Frame y AR.js -->
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.0/aframe/build/aframe-ar.js"></script>
-
-    <!-- Script de Secuencia -->
-    <script>
-        // ¡PON AQUÍ LOS NOMBRES REALES DE TUS ARCHIVOS .GLB!
-        const modelIds = [
-            '#modelo1',
-            '#Duck',
-            '#modelo3'
-        ];
-
-        AFRAME.registerComponent('model-sequencer', {
-            init: function () {
-                const el = this.el;
-                let currentIndex = 0;
-
-                el.addEventListener('click', () => {
-                    currentIndex = (currentIndex + 1) % modelIds.length;
-                    const newModelId = modelIds[currentIndex];
-                    el.setAttribute('gltf-model', newModelId);
-                    console.log('Cambiando a modelo:', newModelId);
-                });
-            }
-        });
-    </script>
-    <style>
-        #info-button {
-            position: fixed; bottom: 20px; left: 50%;
-            transform: translateX(-50%); padding: 12px 20px;
-            font-size: 16px; background-color: #007bff; color: white;
-            border: none; border-radius: 8px; z-index: 1000; cursor: pointer;
-        }
-    </style>
 </head>
 <body style="margin: 0; overflow: hidden;">
 
-    <button id="info-button" onclick="window.location.href='info.html'">
-        Ver Información de Contacto
-    </button>
-
-    <a-scene 
-        embedded 
+    <a-scene
+        embedded
         vr-mode-ui="enabled: false;"
-        arjs="sourceType: webcam; debugUIEnabled: false;"
+        arjs="sourceType: webcam; debugUIEnabled: true;"
     >
-        <!-- 1. PRECARGAMOS TODOS LOS MODELOS CON <a-assets> -->
-        <a-assets>
-            <a-asset-item id="modelo1" src="modelo1.glb"></a-asset-item>
-            <a-asset-item id="Duck" src="Duck.glb"></a-asset-item>
-            <a-asset-item id="modelo3" src="modelo3.glb"></a-asset-item>
-            <!-- Asegúrate de que los archivos 'modelo1.glb', etc. estén en tu repo -->
-        </a-assets>
-
-        <!-- 2. USAMOS EL MARCADOR PARA MOSTRAR LOS OBJETOS -->
+        <!-- 
+            AHORA USAMOS TU MARCADOR PERSONALIZADO.
+            La ruta 'marker.patt' debe apuntar al archivo en la raíz de tu repo.
+        -->
         <a-marker type="pattern" url="marker.patt" patternRatio="0.5">
-            <a-entity
-                id="modelo-interactivo"
-                gltf-model="#Duck"  <!-- Empezamos mostrando el primer modelo precargado -->
-                scale="0.1 0.1 0.1"   <!-- Ajusta la escala a tu modelo -->
-                position="0 0.5 0"    <!-- Ajusta la posición -->
-                rotation="-90 0 0"    <!-- Ajusta la rotación -->
-                data-raycastable
-                model-sequencer
-            ></a-entity>
+
+            <!-- PERO SEGUIMOS USANDO LA CAJA ROJA SIMPLE. -->
+            <!-- Si el marcador se detecta, esta caja DEBE aparecer. -->
+            <a-box position="0 0.5 0" material="color: green;"></a-box>
+
         </a-marker>
-        
-        <a-entity camera cursor="rayOrigin: mouse;" raycaster="objects: [data-raycastable]"></a-entity>
+
+        <a-entity camera></a-entity>
     </a-scene>
+
 </body>
 </html>
+
 
