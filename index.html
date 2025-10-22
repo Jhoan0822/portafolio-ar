@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Portafolio AR</title>
+    <title>Prueba con Modelo OBJ</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.0/aframe/build/aframe-ar.js"></script>
@@ -13,34 +13,21 @@
         vr-mode-ui="enabled: false;"
         arjs="sourceType: webcam; debugUIEnabled: false;"
     >
-        <!-- 
-            Usamos tu marcador personalizado 'marker.patt'.
-        -->
-        <a-marker type="pattern" url="marker.patt" patternRatio="0.5">
+        <a-marker type="pattern" url="marker.patt">
 
-            <!-- CUBO VERDE DE PRUEBA -->
-            <!-- Lo movemos a la izquierda (-1 en el eje X) para que no tape los modelos. -->
+            <!-- CUBO VERDE DE PRUEBA: Lo mantenemos a la izquierda -->
             <a-box position="-1 0.5 0" scale="0.5 0.5 0.5" material="color: green;"></a-box>
 
-            <!-- MODELO 1: Duck.glb -->
-            <!-- Se carga con la etiqueta a-gltf-model. -->
-            <!-- src="Duck.glb" funciona porque el archivo está en la misma carpeta que index.html -->
-            <!-- Probablemente necesites ajustar 'scale' y 'position' para que se vea bien. -->
-            <a-gltf-model
-                src="Duck.glb"
-                scale="2 2 2"
+            <!-- CARGAMOS EL MODELO .OBJ -->
+            <!-- Usamos la etiqueta a-obj-model y especificamos tanto el .obj como su material .mtl -->
+            <!-- Reemplaza 'modelo.obj' y 'modelo.mtl' con los nombres de tus archivos -->
+            <a-obj-model
+                src="modelo.obj"
+                mtl="modelo.mtl"
                 position="0 0 0"
                 rotation="0 0 0"
-            ></a-gltf-model>
-
-            <!-- MODELO 2: modelo1.glb -->
-            <!-- Lo posicionamos a la derecha (1 en el eje X) del pato. -->
-            <a-gltf-model
-                src="modelo1.glb"
-                scale="0.5 0.5 0.5"
-                position="1 0 0"
-                rotation="0 0 0"
-            ></a-gltf-model>
+                scale="0.1 0.1 0.1" 
+            ></a-obj-model>
 
         </a-marker>
 
@@ -49,7 +36,6 @@
 
 </body>
 </html>
-
 
 
 
