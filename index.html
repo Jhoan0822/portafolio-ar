@@ -1,41 +1,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Diagnóstico GitHub Pages</title>
+    <title>Portafolio AR - Jhoan Saldarriaga</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <!-- Librerías de A-Frame y AR.js -->
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.0/aframe/build/aframe-ar.js"></script>
+
+    <!-- Script de Secuencia -->
+    <script>
+        // ¡PON AQUÍ LOS NOMBRES REALES DE TUS ARCHIVOS .GLB!
+        const modelIds = [
+            '#modelo1',
+            '#modelo2',
+            '#modelo3'
+        ];
+
+        AFRAME.registerComponent('model-sequencer', {
+            init: function () {
+                const el = this.el;
+                let currentIndex = 0;
+
+                el.addEventListener('click', () => {
+                    currentIndex = (currentIndex + 1) % modelIds.length;
+                    const newModelId = modelIds[currentIndex];
+                    el.setAttribute('gltf-model', newModelId);
+                    console.log('Cambiando a modelo:', newModelId);
+                });
+            }
+        });
+    </script>
+    <style>
+        #info-button {
+            position: fixed; bottom: 20px; left: 50%;
+            transform: translateX(-50%); padding: 12px 20px;
+            font-size: 16px; background-color: #007bff; color: white;
+            border: none; border-radius: 8px; z-index: 1000; cursor: pointer;
+        }
+    </style>
 </head>
 <body style="margin: 0; overflow: hidden;">
 
-    <a-scene
-        embedded
+    <button id="info-button" onclick="window.location.href='info.html'">
+        Ver Información de Contacto
+    </button>
+
+    <a-scene 
+        embedded 
         vr-mode-ui="enabled: false;"
-        arjs="sourceType: webcam; debugUIEnabled: true;"
+        arjs="sourceType: webcam; debugUIEnabled: false;"
     >
-        <!-- Usamos rutas absolutas para no dejar lugar a dudas -->
-        <a-marker 
-            type="pattern" 
-            url="https://Jhoan0822.github.io/portafolio-ar/marker.patt" 
-            patternRatio="0.5"
-        >
+        <!-- 1. PRECARGAMOS TODOS LOS MODELOS CON <a-assets> -->
+        <a-assets>
+            <a-asset-item id="modelo1" src="modelo1.glb"></a-asset-item>
+            <a-asset-item id="modelo2" src="modelo2.glb"></a-asset-item>
+            <a-asset-item id="modelo3" src="modelo3.glb"></a-asset-item>
+            <!-- Asegúrate de que los archivos 'modelo1.glb', etc. estén en tu repo -->
+        </a-assets>
 
-            <!-- La caja roja, para confirmar que el marcador se detecta -->
-            <!-- Si ves la caja, el marker.patt está cargando bien -->
-            <a-box position="0 0.5 0" material="color: red;" scale="0.4 0.4 0.4"></a-box>
-
-            <!-- El pato, también con ruta absoluta -->
-            <!-- Si no ves el pato, pero sí la caja, el problema es del modelo -->
+        <!-- 2. USAMOS EL MARCADOR PARA MOSTRAR LOS OBJETOS -->
+        <a-marker type="pattern" url="marker.patt" patternRatio="0.5">
             <a-entity
-                gltf-model="url(https://Jhoan0822.github.io/portafolio-ar/Duck.glb)"
-                scale="0.05 0.05 0.05"
-                position="0 0.2 0"
-                rotation="0 0 0"
+                id="modelo-interactivo"
+                gltf-model="#modelo1"  <!-- Empezamos mostrando el primer modelo precargado -->
+                scale="0.1 0.1 0.1"   <!-- Ajusta la escala a tu modelo -->
+                position="0 0.5 0"    <!-- Ajusta la posición -->
+                rotation="-90 0 0"    <!-- Ajusta la rotación -->
+                data-raycastable
+                model-sequencer
             ></a-entity>
-
         </a-marker>
-
-        <a-entity camera></a-entity>
+        
+        <a-entity camera cursor="rayOrigin: mouse;" raycaster="objects: [data-raycastable]"></a-entity>
     </a-scene>
 </body>
 </html>
