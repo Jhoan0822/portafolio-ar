@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Prueba con Modelo OBJ (con color)</title>
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=100.0">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.0/aframe/build/aframe-ar.js"></script>
 </head>
@@ -16,14 +16,13 @@
         <a-marker type="pattern" url="marker.patt">
 
             <!-- MODELO .OBJ CON UN COLOR BÁSICO -->
-            <!-- Añadimos el atributo 'material' para darle color. -->
-            <!-- Reemplaza 'modelo.obj' con el nombre de tu archivo -->
+            <!-- Vamos a probar con una escala mucho mayor. ¡No dudes en seguir aumentando este número! -->
             <a-obj-model
                 src="modelo.obj"
-                position="0 0 0"
+                position="0 0.5 0" <!-- Lo subí un poco en el eje Y para que no esté "enterrado" en el marcador -->
                 rotation="0 0 0"
-                scale="100 100 100"
-                material="color: #FF9800;" <!-- Color naranja, puedes usar "red", "blue", etc. -->
+                scale="1000 1000 1000" <!-- ¡Empecemos con 1000! Si no es suficiente, prueba 5000, 10000... -->
+                material="color: #FFC107;" <!-- Cambié a un amarillo más brillante tipo "pato" :) -->
             ></a-obj-model>
 
         </a-marker>
@@ -33,6 +32,3 @@
 
 </body>
 </html>
-
-
-
