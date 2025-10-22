@@ -1,33 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Prueba de Marcador Personalizado</title>
+    <title>AR Portafolio - Secuencia de Modelos</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <!-- Usamos versiones estables de las librerías desde un CDN confiable -->
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.0/aframe/build/aframe-ar.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
 
-    <a-scene
-        embedded
-        vr-mode-ui="enabled: false;"
-        arjs="sourceType: webcam; debugUIEnabled: true;"
-    >
-        <!-- 
-            AHORA USAMOS TU MARCADOR PERSONALIZADO.
-            La ruta 'marker.patt' debe apuntar al archivo en la raíz de tu repo.
-        -->
-        <a-marker type="pattern" url="marker.patt" patternRatio="0.5">
+    <!-- El botón sigue funcionando igual -->
+    <button id="info-button" onclick="window.location.href='info.html'">
+        Ver Información de Contacto
+    </button>
 
-            <!-- PERO SEGUIMOS USANDO LA CAJA ROJA SIMPLE. -->
-            <!-- Si el marcador se detecta, esta caja DEBE aparecer. -->
-            <a-box position="0 0.5 0" material="color: red;"></a-box>
+    <a-scene 
+        embedded 
+        vr-mode-ui="enabled: false;" 
+        renderer="logarithmicDepthBuffer: true;"
+        arjs="sourceType: webcam; debugUIEnabled: false;"
+    >
+
+        <!-- Marcador personalizado. Todo lo que esté DENTRO de esta etiqueta
+             aparecerá sobre el marcador cuando sea detectado. -->
+        <a-marker type="pattern" url="marker.patt">
+
+            <!-- 
+                Esta es la entidad que mostrará los modelos 3D.
+                - Le damos un ID para poder seleccionarla fácilmente con JavaScript.
+                - La hacemos "clicable" para poder interactuar con ella.
+                - Le ponemos nuestro componente personalizado "model-sequencer".
+            -->
+            <a-entity
+                id="modelo-3d"
+                gltf-model="url(modelo1.glb)"
+                scale="0.1 0.1 0.1"
+                position="0 0.5 0"
+                rotation="-90 0 0"
+                class="clickable"
+                model-sequencer
+            ></a-entity>
 
         </a-marker>
-
-        <a-entity camera></a-entity>
+        
+        <a-entity camera cursor="rayOrigin: mouse;"></a-entity>
     </a-scene>
 
+    <!-- El Script para la Lógica de la Secuencia -->
+    <script>
+        // 1. Define la lista de tus modelos GLB.
+        //    ¡Asegúrate de que los nombres de archivo sean correctos!
+        const modelList = [
+            'url(modelo1.glb)',
+            'url(modelo2.glb)',
+            'url(modelo3.glb)'
+            // Añade aquí todos los modelos que quieras
+        ];
+
+        // 2. Registramos un nuevo "componente" en A-Frame para manejar la secuencia.
+        //    Esto es más ordenado que poner código suelto.
+        AFRAME.registerComponent('model-sequencer', {
+            init: function () {
+                const el = this.el; // 'el' es la entidad <a-entity> que tiene este componente.
+                let currentIndex = 0;
+
+                // 3. Escuchamos el evento 'click' en la entidad.
+                el.addEventListener('click', () => {
+                    // Incrementamos el índice para pasar al siguiente modelo.
+                    currentIndex++;
+                    
+                    // Si llegamos al final de la lista, volvemos al principio.
+                    // El operador '%' (módulo) hace esto de forma muy elegante.
+                    if (currentIndex >= modelList.length) {
+                        currentIndex = 0;
+                    }
+
+                    // Obtenemos la URL del nuevo modelo de nuestra lista.
+                    const newModelUrl = modelList[currentIndex];
+                    
+                    // 4. Actualizamos el atributo 'gltf-model' de la entidad.
+                    //    ¡Esto es lo que causa que el modelo cambie!
+                    el.setAttribute('gltf-model', newModelUrl);
+
+                    console.log('Cambiando al modelo:', newModelUrl);
+                });
+            }
+        });
+    </script>
 </body>
 </html>
 
