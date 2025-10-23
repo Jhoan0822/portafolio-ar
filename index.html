@@ -5,29 +5,13 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.0/aframe/build/aframe-ar.js"></script>
-    <!-- Include DRACOLoader script matching the THREE.js version (0.137.0) -->
-    <script src="https://unpkg.com/three@0.137.0/examples/js/loaders/DRACOLoader.js"></script>
-    <script>
-        // Set up DRACOLoader for the shared GLTFLoader in A-Frame
-        document.addEventListener('DOMContentLoaded', function() {
-            // Access the shared loader from the gltf-model component
-            const loader = AFRAME.components['gltf-model'].Component.prototype.loader;
-            if (loader) {
-                const dracoLoader = new THREE.DRACOLoader();
-                // Use Google's hosted Draco decoders (update version if needed)
-                dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.7/');
-                loader.setDRACOLoader(dracoLoader);
-            } else {
-                console.warn('GLTFLoader not found.');
-            }
-        });
-    </script>
 </head>
 <body style="margin: 0; overflow: hidden;">
     <a-scene
         embedded
         vr-mode-ui="enabled: false;"
         arjs="sourceType: webcam; debugUIEnabled: false;"
+        gltf-model="dracoDecoderPath: https://www.gstatic.com/draco/v1/decoders/"
     >
         <a-marker type="pattern" url="marker.patt" patternRatio="0.5">
             <!-- MODELO .GLB -->
@@ -43,4 +27,5 @@
     </a-scene>
 </body>
 </html>
+        
 
