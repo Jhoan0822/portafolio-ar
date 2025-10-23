@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Prueba con Modelo OBJ (con color)</title>
+    <title>Portafolio AR con GLB</title>
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.0/aframe/build/aframe-ar.js"></script>
+    <script src="https://cdn.jsdelivr/gh/AR-js-org/AR.js@3.4.0/aframe/build/aframe-ar.js"></script>
 </head>
 <body style="margin: 0; overflow: hidden;">
 
@@ -15,14 +15,15 @@
     >
         <a-marker type="pattern" url="marker.patt">
 
-            <!-- MODELO .OBJ CON UN COLOR BÁSICO -->
-            <!-- Vamos a probar con una escala mucho mayor. ¡No dudes en seguir aumentando este número! -->
-            <a-obj-model
-                src="circuito.obj"
-                position="0 0.5 0" <!-- Lo subí un poco en el eje Y para que no esté "enterrado" en el marcador -->
+            <!-- CARGAMOS NUESTRO MODELO GLB OPTIMIZADO -->
+            <!-- Usamos la etiqueta a-gltf-model, que es la correcta para archivos .glb -->
+            <!-- ¡Asegúrate de cambiar 'circuito.glb' por el nombre real de tu archivo! -->
+            <a-gltf-model
+                src="circuito.glb"
+                position="0 0 0"
                 rotation="0 0 0"
-                scale="100 100 100" <!-- ¡Empecemos con 1000! Si no es suficiente, prueba 5000, 10000... -->
-            ></a-obj-model>
+                scale="10 10 10"
+            ></a-gltf-model>
 
         </a-marker>
 
@@ -31,4 +32,5 @@
 
 </body>
 </html>
+
 
